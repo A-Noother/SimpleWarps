@@ -9,6 +9,10 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+import me.NerdsWBNerds.SimpleWarps.Commands.DelWarpCommand;
+import me.NerdsWBNerds.SimpleWarps.Commands.SetWarpCommand;
+import me.NerdsWBNerds.SimpleWarps.Commands.WarpCommand;
+
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -32,6 +36,12 @@ public class SimpleWarps extends JavaPlugin {
 		if(file.exists()){
 			warps = load();
 	    }
+
+		this.getCommand("warp").setExecutor(new WarpCommand(this));
+		this.getCommand("setwarp").setExecutor(new SetWarpCommand(this));
+		this.getCommand("addwarp").setExecutor(new SetWarpCommand(this));
+		this.getCommand("delwarp").setExecutor(new DelWarpCommand(this));
+		this.getCommand("removewarp").setExecutor(new DelWarpCommand(this));
 	}
 	
 	public void onDisable(){
@@ -61,7 +71,6 @@ public class SimpleWarps extends JavaPlugin {
 		}
 	}
 	
-
 	@SuppressWarnings("unchecked")
 	public static HashMap<String, String> load(){
 		try{
