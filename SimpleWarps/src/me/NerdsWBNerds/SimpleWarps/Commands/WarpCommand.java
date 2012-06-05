@@ -32,16 +32,10 @@ public class WarpCommand implements CommandExecutor{
 			
 			if(cmd.getName().equalsIgnoreCase("warp")){
 				if(args.length==0){
-					boolean first = true;
 					tell(player, GOLD + "----- WARP LIST -----");
 					String list = "";
 					for (Entry<String, String> warp : SimpleWarps.warps.entrySet()) {
-						if(first){
-							list+= warp.getKey();
-							first = false;
-						}else{
-							list+=", " + warp.getKey();
-						}
+							list+= " *" + warp.getKey();
 					}
 					
 					tell(player, GREEN + list);
@@ -77,8 +71,10 @@ public class WarpCommand implements CommandExecutor{
 					}
 					
 					target.teleport(parseLocation(SimpleWarps.warps.get(args[1])));
-					tell(player, GOLD + "[SimpleWarps] " + GREEN + "You have teleported " + AQUA + target.getName() + GREEN + " to the " + AQUA + args[1] + GREEN + " warp.");
+					tell(player, GOLD + "[SimpleWarps] " + AQUA + target.getName() + GREEN + " teleported to " + AQUA + args[1] + GREEN + " warp.");
 					tell(target, GOLD + "[SimpleWarps] " + GREEN + "You have been teleported to the " + AQUA + args[1] + GREEN + " warp.");
+					
+					return true;
 				}
 			}
 		}else{

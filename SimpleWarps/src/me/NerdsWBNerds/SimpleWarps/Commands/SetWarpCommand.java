@@ -33,8 +33,9 @@ public class SetWarpCommand implements CommandExecutor{
 			}
 			
 			if(cmd.getName().equalsIgnoreCase("setwarp") || cmd.getName().equalsIgnoreCase("addwarp")){
-				SimpleWarps.warps.put(args[1], intoString(player.getLocation()));
-				tell(player, GOLD + "[SimpleWarps] " + GREEN + "The warp " + AQUA + args[1] + GREEN + " has been created.");
+				SimpleWarps.warps.put(args[0], intoString(player.getLocation()));
+				tell(player, GOLD + "[SimpleWarps] " + GREEN + "The warp " + AQUA + args[0] + GREEN + " has been created.");
+				return true;
 			}
 		}
 		

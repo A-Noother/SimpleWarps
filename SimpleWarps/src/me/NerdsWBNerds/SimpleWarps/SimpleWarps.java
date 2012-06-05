@@ -35,6 +35,10 @@ public class SimpleWarps extends JavaPlugin {
 	    
 		if(file.exists()){
 			warps = load();
+			
+			if(warps==null || warps.isEmpty()){
+				warps = new HashMap<String, String>();
+			}
 	    }
 
 		this.getCommand("warp").setExecutor(new WarpCommand(this));
