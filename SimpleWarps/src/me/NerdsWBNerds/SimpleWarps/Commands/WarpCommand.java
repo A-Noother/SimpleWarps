@@ -65,7 +65,7 @@ public class WarpCommand implements CommandExecutor{
 						return true;
 					}
 					
-					Player target = plugin.server.getPlayer(args[0]);
+					Player target = plugin.getServer().getPlayer(args[0]);
 					if(target==null || !target.isOnline()){
 						tell(player, RED + "[SimpleWarps] Player not found.");
 						return true;
