@@ -1,6 +1,6 @@
 name: SimpleWarps
 main: me.NerdsWBNerds.SimpleWarps.SimpleWarps
-version: 1.5
+version: 1.6
 commands:
    warp:
       description: Show list of warp, or warp to or warp other people to a warp.

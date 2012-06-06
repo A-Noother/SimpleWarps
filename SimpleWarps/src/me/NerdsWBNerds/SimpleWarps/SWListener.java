@@ -55,6 +55,8 @@ public class SWListener implements Listener {
 				e.setLine(1, "don't have");
 				e.setLine(2, "permission.");
 				e.setLine(3, "");
+				
+				return;
 			}
 
 			if(!SimpleWarps.isWarp(e.getLine(1))){
