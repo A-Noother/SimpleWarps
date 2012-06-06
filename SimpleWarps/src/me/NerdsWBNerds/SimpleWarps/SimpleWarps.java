@@ -7,18 +7,20 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import me.NerdsWBNerds.SimpleWarps.Commands.DelWarpCommand;
 import me.NerdsWBNerds.SimpleWarps.Commands.SetWarpCommand;
 import me.NerdsWBNerds.SimpleWarps.Commands.WarpCommand;
 
+import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SimpleWarps extends JavaPlugin {
 	public SWListener Listener = new SWListener(this);
-	public Server server;
+	public static Server server;
 	public Logger log;
 
 	public static String Path = "plugins/SimpleWarps" + File.separator + "Warps.dat";
@@ -50,6 +52,51 @@ public class SimpleWarps extends JavaPlugin {
 	
 	public void onDisable(){
 		save();
+	}
+	
+	public static boolean isWarp(String warp){
+		for(Entry<String, String> w: warps.entrySet()){
+			if(w.getKey().toLowerCase().equalsIgnoreCase(warp))
+				return true;
+		}
+		
+		return false;
+	}
+	
+	public static void addWarp(String w, Location to){
+		warps.put(w, intoString(to));
+	}
+	
+	public static void removeWarp(String w){
+		warps.remove(w);
+	}
+	
+	public static Location getWarp(String wa){
+		for(Entry<String, String> w: warps.entrySet()){
+			if(w.getKey().toLowerCase().equalsIgnoreCase(wa))
+				return parseLocation(w.getValue());
+		}
+		
+		return null;
+	}
+	
+	public static Location parseLocation(String loc){
+		String i[] = loc.split(",");
+		Location to = new Location(server.getWorld(i[0]), toDouble(i[1]), toDouble(i[2]), toDouble(i[3]), toFloat(i[4]), toFloat(i[5]));
+		
+		return to;
+	}
+	
+	public static String intoString(Location l){
+		return l.getWorld().getName() + "," + l.getX() + ","  + l.getY() + ","  + l.getZ() + ","  + l.getYaw() + ","  + l.getPitch();
+	}
+	
+	public static double toDouble(String i){
+		return Double.parseDouble(i);
+	}
+	
+	public static Float toFloat(String i){
+		return Float.parseFloat(i);
 	}
 	
 	public static void save(){

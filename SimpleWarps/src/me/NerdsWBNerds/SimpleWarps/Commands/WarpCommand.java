@@ -1,13 +1,10 @@
 package me.NerdsWBNerds.SimpleWarps.Commands;
 
-import static org.bukkit.ChatColor.AQUA;
-import static org.bukkit.ChatColor.GOLD;
-import static org.bukkit.ChatColor.GREEN;
-import static org.bukkit.ChatColor.RED;
+import static org.bukkit.ChatColor.*;
+import static me.NerdsWBNerds.SimpleWarps.SimpleWarps.*;
 
 import java.util.Map.Entry;
 
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -43,12 +40,12 @@ public class WarpCommand implements CommandExecutor{
 				}
 				
 				if(args.length==1){
-					if(!SimpleWarps.warps.containsKey(args[0])){
+					if(!isWarp(args[0])){
 						tell(player, RED + "[SimpleWarps] Warp not found.");
 						return true;
 					}
 
-					player.teleport(parseLocation(SimpleWarps.warps.get(args[0])));
+					player.teleport(getWarp(args[0]));
 					tell(player, GOLD + "[SimpleWarps] " + GREEN + "You have been teleported to the " + AQUA + args[0] + GREEN + " warp.");
 					return true;
 				}
@@ -65,12 +62,12 @@ public class WarpCommand implements CommandExecutor{
 						return true;
 					}
 					
-					if(!SimpleWarps.warps.containsKey(args[1])){
+					if(!isWarp(args[1])){
 						tell(player, RED + "[SimpleWarps] Warp not found.");
 						return true;
 					}
 					
-					target.teleport(parseLocation(SimpleWarps.warps.get(args[1])));
+					target.teleport(getWarp(args[1]));
 					tell(player, GOLD + "[SimpleWarps] " + AQUA + target.getName() + GREEN + " teleported to " + AQUA + args[1] + GREEN + " warp.");
 					tell(target, GOLD + "[SimpleWarps] " + GREEN + "You have been teleported to the " + AQUA + args[1] + GREEN + " warp.");
 					
@@ -84,18 +81,18 @@ public class WarpCommand implements CommandExecutor{
 
 			if(cmd.getName().equalsIgnoreCase("warp")){
 				if(args.length==2){
-					Player target = plugin.server.getPlayer(args[0]);
+					Player target = SimpleWarps.server.getPlayer(args[0]);
 					if(target==null || !target.isOnline()){
 						System.out.println("[SimpleWarps] Player not found.");
 						return true;
 					}
 					
-					if(!SimpleWarps.warps.containsKey(args[1])){
+					if(!isWarp(args[1])){
 						System.out.println("[SimpleWarps] Warp not found.");
 						return true;
 					}
 					
-					target.teleport(parseLocation(SimpleWarps.warps.get(args[1])));
+					target.teleport(getWarp(args[1]));
 					System.out.println("[SimpleWarps] You have teleported " + target.getName() + " to the " + args[1] + " warp.");
 					tell(target, GOLD + "[SimpleWarps] " + GREEN + "You have been teleported to the " + AQUA + args[1] + GREEN + " warp.");
 				}
@@ -107,24 +104,5 @@ public class WarpCommand implements CommandExecutor{
 
 	public void tell(Player player, String m){
 		player.sendMessage(m);
-	}
-	
-	public Location parseLocation(String loc){
-		String i[] = loc.split(",");
-		Location to = new Location(plugin.server.getWorld(i[0]), toDouble(i[1]), toDouble(i[2]), toDouble(i[3]), toFloat(i[4]), toFloat(i[5]));
-		
-		return to;
-	}
-	
-	public String intoString(Location l){
-		return l.getWorld().getName() + "," + l.getX() + ","  + l.getY() + ","  + l.getZ() + ","  + l.getYaw() + ","  + l.getPitch();
-	}
-	
-	public double toDouble(String i){
-		return Double.parseDouble(i);
-	}
-	
-	public Float toFloat(String i){
-		return Float.parseFloat(i);
 	}
 }
