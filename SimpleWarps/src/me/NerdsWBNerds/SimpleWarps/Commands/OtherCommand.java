@@ -27,7 +27,7 @@ public class OtherCommand implements CommandExecutor{
 			if(cmd.getName().equalsIgnoreCase("sw")){
 				if(args.length==2){
 					if(args[0].equalsIgnoreCase("useop")){
-						if(!SimpleWarps.hasPerm(player, "simplewarps.changepermmethod")){
+						if(!SimpleWarps.hasPerm(player, "simplewarps.changeuseop")){
 							player.sendMessage(RED + "[SimpleWarps] You don't have permission to do this!");
 							return true;
 						}				

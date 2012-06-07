@@ -29,7 +29,7 @@ public class WarpCommand implements CommandExecutor{
 			
 			if(cmd.getName().equalsIgnoreCase("warp")){
 				if(args.length==0){
-					if(!player.hasPermission("simplewarps.listwarp") && !SimpleWarps.useOP){
+					if(!player.hasPermission("simplewarps.list") && !SimpleWarps.useOP){
 						tell(player, RED + "[SimpleWarps] You don't have permission to do this!");
 						return true;
 					}
