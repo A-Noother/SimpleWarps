@@ -3,6 +3,7 @@ package me.NerdsWBNerds.SimpleWarps;
 import static org.bukkit.ChatColor.AQUA;
 import static org.bukkit.ChatColor.GOLD;
 import static org.bukkit.ChatColor.GREEN;
+import static org.bukkit.ChatColor.RED;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -38,6 +39,17 @@ public class SWListener implements Listener {
 						return;
 					}
 					
+					if(!e.getPlayer().hasPermission("simplewarps.usesign") && !SimpleWarps.useOP){
+						e.getPlayer().sendMessage(ChatColor.RED + "You do not have permission to do this.");
+						return;
+					}
+
+
+					if(!e.getPlayer().hasPermission("simplewarps.warps." + warp) && !SimpleWarps.useOP){
+						e.getPlayer().sendMessage(RED + "[SimpleWarps] You don't have permission to do this.");
+						return;
+					}
+					
 					e.getPlayer().teleport(SimpleWarps.getWarp(warp));
 					e.getPlayer().sendMessage(GOLD + "[SimpleWarps] " + GREEN + "You have been teleported to the " + AQUA + warp + GREEN + " warp.");
 				}
@@ -50,7 +62,7 @@ public class SWListener implements Listener {
 		Player player = e.getPlayer();
 		
 		if(e.getLine(0).equalsIgnoreCase("[WARP]")){
-			if(!player.isOp()){
+			if(!SimpleWarps.hasPerm(player, "simplewarps.createsign")){
 				e.setLine(0, ChatColor.DARK_RED + "!ERROR!");
 				e.setLine(1, "don't have");
 				e.setLine(2, "permission.");

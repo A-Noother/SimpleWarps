@@ -1,6 +1,6 @@
 name: SimpleWarps
 main: me.NerdsWBNerds.SimpleWarps.SimpleWarps
-version: 1.6
+version: 1.7
 commands:
    warp:
       description: Show list of warp, or warp to or warp other people to a warp.
@@ -17,3 +17,6 @@ commands:
    removewarp:
       description: Delete warp
       usage: /removewarp <name>
+   sw:
+      description: Change permission method or reload config.
+      usage: /sw useop <true|false> or /sw reload

@@ -29,6 +29,11 @@ public class WarpCommand implements CommandExecutor{
 			
 			if(cmd.getName().equalsIgnoreCase("warp")){
 				if(args.length==0){
+					if(!player.hasPermission("simplewarps.listwarp") && !SimpleWarps.useOP){
+						tell(player, RED + "[SimpleWarps] You don't have permission to do this!");
+						return true;
+					}
+					
 					tell(player, GOLD + "----- WARP LIST -----");
 					String list = "";
 					for (Entry<String, String> warp : SimpleWarps.warps.entrySet()) {
@@ -39,19 +44,24 @@ public class WarpCommand implements CommandExecutor{
 					return true;
 				}
 				
-				if(args.length==1){
+				if(args.length==1){					
 					if(!isWarp(args[0])){
 						tell(player, RED + "[SimpleWarps] Warp not found.");
 						return true;
 					}
 
+					if(!player.hasPermission("simplewarps.warps." + args[0]) && !SimpleWarps.useOP){
+						tell(player, RED + "[SimpleWarps] You don't have permission to do this.");
+						return true;
+					}
+					
 					player.teleport(getWarp(args[0]));
 					tell(player, GOLD + "[SimpleWarps] " + GREEN + "You have been teleported to the " + AQUA + args[0] + GREEN + " warp.");
 					return true;
 				}
 				
 				if(args.length==2){
-					if(!player.isOp()){
+					if(!SimpleWarps.hasPerm(player, "simplewarps.warpothers")){
 						tell(player, RED + "[SimpleWarps] You don't have permission to do this!");
 						return true;
 					}

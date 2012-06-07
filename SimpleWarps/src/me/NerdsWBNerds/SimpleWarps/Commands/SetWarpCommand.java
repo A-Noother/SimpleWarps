@@ -25,7 +25,7 @@ public class SetWarpCommand implements CommandExecutor{
 			//////////////// ------------ PLAYER COMMANDS --------------- /////////////////
 			//////////////// -------------------------------------------- /////////////////
 			
-			if(!player.isOp()){
+			if(!SimpleWarps.hasPerm(player, "simplewarps.addwarp")){
 				tell(player, RED + "[SimpleWarps] You don't have permission to do this!");
 				return true;
 			}

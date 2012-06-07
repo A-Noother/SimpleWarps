@@ -11,18 +11,21 @@ import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import me.NerdsWBNerds.SimpleWarps.Commands.DelWarpCommand;
+import me.NerdsWBNerds.SimpleWarps.Commands.OtherCommand;
 import me.NerdsWBNerds.SimpleWarps.Commands.SetWarpCommand;
 import me.NerdsWBNerds.SimpleWarps.Commands.WarpCommand;
 
 import org.bukkit.Location;
 import org.bukkit.Server;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SimpleWarps extends JavaPlugin {
 	public SWListener Listener = new SWListener(this);
 	public static Server server;
 	public Logger log;
-
+	public static boolean useOP = false;
+	
 	public static String Path = "plugins/SimpleWarps" + File.separator + "Warps.dat";
 	public static HashMap<String, String> warps = new HashMap<String, String>();
 	
@@ -48,6 +51,28 @@ public class SimpleWarps extends JavaPlugin {
 		this.getCommand("addwarp").setExecutor(new SetWarpCommand(this));
 		this.getCommand("delwarp").setExecutor(new DelWarpCommand(this));
 		this.getCommand("removewarp").setExecutor(new DelWarpCommand(this));
+		this.getCommand("sw").setExecutor(new OtherCommand(this));
+		
+		loadConf();
+	}
+	
+	public void loadConf(){
+		if(this.getConfig().contains("useOP")){
+			try{
+				useOP = getConfig().getBoolean("useOP");
+			}catch(Exception e){
+				useOP = false;
+			}
+		}else{
+			getConfig().set("useOP", false);
+		}
+
+		saveConfig();
+	}
+	
+	public void saveConf(){
+		getConfig().set("useOP", useOP);
+		saveConfig();
 	}
 	
 	public void onDisable(){
@@ -61,6 +86,20 @@ public class SimpleWarps extends JavaPlugin {
 		}
 		
 		return false;
+	}
+	
+	public static boolean hasPerm(Player p, String perm){
+		if(useOP){
+			if(p.isOp())
+				return true;
+			else
+				return false;
+		}else{
+			if(p.hasPermission(perm))
+				return true;
+			else
+				return false;
+		}
 	}
 	
 	public static void addWarp(String w, Location to){
@@ -106,7 +145,6 @@ public class SimpleWarps extends JavaPlugin {
 	    	try {
 				file.createNewFile();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	    }
